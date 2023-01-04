@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useEffectOnce, useInterval } from 'usehooks-ts'
 
 interface TimerControllers {
@@ -10,10 +10,11 @@ interface TimerControllers {
 
 type TimeInterval = 'ms' | 'sec'
 
-const useTimer = (timeInterval: TimeInterval) : [number, boolean, TimerControllers] => {
+const useTimer = (timeInterval: TimeInterval): [number, boolean, boolean, TimerControllers] => {
   const [startCount, setStartCount] = useState(0)
   const [count, setCount] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
   const [interval, setInterval] = useState(1000);
 
   useEffectOnce(() => {
@@ -34,6 +35,7 @@ const useTimer = (timeInterval: TimeInterval) : [number, boolean, TimerControlle
   useInterval(() => {
     if (count <= 0) {
       setIsRunning(false)
+      setIsFinished(true)
       return
     }
 
@@ -50,10 +52,21 @@ const useTimer = (timeInterval: TimeInterval) : [number, boolean, TimerControlle
 
   const resetTimer = () => {
     setIsRunning(false)
+    setIsFinished(false)
     setCount(startCount)
   }
 
-  return [ count, isRunning, {startTimer, stopTimer, resetTimer, setStartCount} as TimerControllers ]
+  return [
+    count,
+    isRunning,
+    isFinished,
+    {
+      startTimer,
+      stopTimer,
+      resetTimer,
+      setStartCount
+    } as TimerControllers
+  ]
 }
 
 export default useTimer
