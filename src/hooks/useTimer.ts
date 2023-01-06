@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react'
-import { useEffectOnce, useInterval } from 'usehooks-ts'
+import { useEffect, useState } from "react";
+import { useEffectOnce, useInterval } from "usehooks-ts";
 
 interface TimerControllers {
-  startTimer: () => void
-  resetTimer: () => void
-  stopTimer: () => void
-  setStartCount: (startCount: number) => void
+  startTimer: () => void;
+  resetTimer: () => void;
+  stopTimer: () => void;
+  setStartCount: (startCount: number) => void;
 }
 
-type TimeInterval = 'ms' | 'sec'
+type TimeInterval = "ms" | "sec";
 
-const useTimer = (timeInterval: TimeInterval): [number, boolean, boolean, TimerControllers] => {
-  const [startCount, setStartCount] = useState(0)
+const useTimer = (
+  timeInterval: TimeInterval
+): [number, boolean, boolean, TimerControllers] => {
+  const [startCount, setStartCount] = useState(0);
   const [count, setCount] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
@@ -19,42 +21,45 @@ const useTimer = (timeInterval: TimeInterval): [number, boolean, boolean, TimerC
 
   useEffectOnce(() => {
     switch (timeInterval) {
-      case 'ms': 
-        setInterval(10)
+      case "ms":
+        setInterval(10);
         break;
-      case 'sec':
-        setInterval(1000)
+      case "sec":
+        setInterval(1000);
         break;
     }
-  })
+  });
 
   useEffect(() => {
-    setCount(startCount)
-  }, [startCount])
+    setCount(startCount);
+  }, [startCount]);
 
-  useInterval(() => {
-    if (count <= 0) {
-      setIsRunning(false)
-      setIsFinished(true)
-      return
-    }
+  useInterval(
+    () => {
+      if (count <= 0) {
+        setIsRunning(false);
+        setIsFinished(true);
+        return;
+      }
 
-    setCount((oldCount) => oldCount - interval)
-  }, isRunning ? interval : null)
+      setCount((oldCount) => oldCount - interval);
+    },
+    isRunning ? interval : null
+  );
 
   const startTimer = () => {
-    setIsRunning(true)
-  }
+    setIsRunning(true);
+  };
 
   const stopTimer = () => {
-    setIsRunning(false)
-  }
+    setIsRunning(false);
+  };
 
   const resetTimer = () => {
-    setIsRunning(false)
-    setIsFinished(false)
-    setCount(startCount)
-  }
+    setIsRunning(false);
+    setIsFinished(false);
+    setCount(startCount);
+  };
 
   return [
     count,
@@ -64,9 +69,9 @@ const useTimer = (timeInterval: TimeInterval): [number, boolean, boolean, TimerC
       startTimer,
       stopTimer,
       resetTimer,
-      setStartCount
-    } as TimerControllers
-  ]
-}
+      setStartCount,
+    } as TimerControllers,
+  ];
+};
 
-export default useTimer
+export default useTimer;
