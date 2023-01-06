@@ -1,34 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import "./App.css";
+import usePomydoro from "./hooks/usePomydoro";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [counter, isRunning, isFinished, { startTimer, resetTimer }] =
+    usePomydoro();
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="bg-red-100 w-screen h-screen flex justify-center items-center">
+      <div className="w-[32rem] bg-blue-300 p-10 rounded-xl grid grid-cols-2 gap-x-1 gap-y-4">
+        <div
+          className={
+            "col-span-2 flex justify-center" + (isRunning ? " green" : " red")
+          }
+        >
+          {counter}
+        </div>
+        <button className="btn-primary" onClick={(_) => startTimer()}>
+          {isRunning ? "Pause" : "Start"}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button className="btn-secondary" onClick={(_) => resetTimer()}>
+          Reset
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
