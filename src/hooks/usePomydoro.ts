@@ -1,52 +1,48 @@
-import { useState } from 'react'
-import { useEffectOnce } from 'usehooks-ts';
-import useTimer from './useTimer';
+import { Dispatch, SetStateAction, useState } from "react";
+import { useEffectOnce } from "usehooks-ts";
+import useTimer from "./useTimer";
 
 interface PomodoroControllers {
-  startTimer: () => void
-  resetTimer: () => void
-  stopTimer: () => void
-  setPomydoroTime: (time: number) => void
-  setShortBreakTime: (time: number) => void
-  setLongBreakTime: (time: number) => void
+  startTimer: () => void;
+  resetTimer: () => void;
+  stopTimer: () => void;
+  setPomydoro: Dispatch<SetStateAction<number>>;
+  setShortBreak: Dispatch<SetStateAction<number>>;
+  setLongBreak: Dispatch<SetStateAction<number>>;
+  setShortBreakCounter: Dispatch<SetStateAction<number>>;
 }
 
-const usePomydoro = () : [number, boolean, PomodoroControllers] => {
-  const [pomydoro, setPomydoro] = useState(6000);
+const usePomydoro = (): [number, boolean, boolean, PomodoroControllers] => {
+  const [pomydoro, setPomydoro] = useState(25);
   const [shortBreak, setShortBreak] = useState(5);
   const [longBreak, setLongBreak] = useState(25);
-  
-  const [ counter, isRunning, { startTimer, stopTimer, resetTimer, setStartCount } ] =
-    useTimer('ms')
+  const [shortBreakCounter, setShortBreakCounter] = useState(3);
+
+  const [
+    counter,
+    isRunning,
+    isFinished,
+    { startTimer, stopTimer, resetTimer, setStartCount },
+  ] = useTimer("ms");
 
   useEffectOnce(() => {
-    setStartCount(60000)
-  })
+    setStartCount(25000);
+  });
 
-  const setPomydoroTime = (time: number) => {
-    setPomydoro(time)
-  }
-
-  const setShortBreakTime = (time: number) => {
-    setShortBreak(time)
-  }
-
-  const setLongBreakTime = (time: number) => {
-    setLongBreak(time)
-  }
-
-  return [ 
+  return [
     counter,
-    isRunning, 
+    isRunning,
+    isFinished,
     {
       startTimer,
       resetTimer,
       stopTimer,
-      setPomydoroTime,
-      setShortBreakTime,
-      setLongBreakTime
-    }
-  ]
-}
+      setPomydoro,
+      setShortBreak,
+      setLongBreak,
+      setShortBreakCounter,
+    },
+  ];
+};
 
-export default usePomydoro
+export default usePomydoro;
