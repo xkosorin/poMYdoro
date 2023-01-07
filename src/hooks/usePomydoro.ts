@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { useEffectOnce } from "usehooks-ts";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useBoolean, useEffectOnce } from "usehooks-ts";
 import useTimer from "./useTimer";
 
 interface PomodoroControllers {
@@ -13,10 +13,12 @@ interface PomodoroControllers {
 }
 
 const usePomydoro = (): [number, boolean, boolean, PomodoroControllers] => {
-  const [pomydoro, setPomydoro] = useState(25);
-  const [shortBreak, setShortBreak] = useState(5);
-  const [longBreak, setLongBreak] = useState(25);
+  const [pomydoro, setPomydoro] = useState(15000);
+  const [shortBreak, setShortBreak] = useState(5000);
+  const [longBreak, setLongBreak] = useState(10000);
   const [shortBreakCounter, setShortBreakCounter] = useState(3);
+  const [breakNumber, setBreakNumber] = useState(0);
+  const { value: isBreak, toggle: toggleBreak } = useBoolean(false);
 
   const [
     counter,
@@ -26,8 +28,41 @@ const usePomydoro = (): [number, boolean, boolean, PomodoroControllers] => {
   ] = useTimer("ms");
 
   useEffectOnce(() => {
-    setStartCount(25000);
+    setStartCount(pomydoro);
   });
+
+  useEffect(() => {
+    if (!isFinished) return;
+    toggleBreak();
+    console.log("break toggle");
+  }, [isFinished]);
+
+  useEffect(() => {
+    if (isBreak) {
+      console.log("break number brefore set: " + breakNumber);
+      setBreakNumber(
+        (oldBreakNumber) => (oldBreakNumber + 1) % (shortBreakCounter + 1)
+      );
+    }
+  }, [isBreak]);
+
+  useEffect(() => {
+    if (isBreak) {
+      if (breakNumber === shortBreakCounter) {
+        console.log("long break started!");
+        setStartCount(longBreak);
+        resetTimer();
+      } else {
+        console.log("short break started!");
+        setStartCount(shortBreak);
+        resetTimer();
+      }
+    } else {
+      console.log("break ended!");
+      setStartCount(pomydoro);
+      resetTimer();
+    }
+  }, [isBreak]);
 
   return [
     counter,
