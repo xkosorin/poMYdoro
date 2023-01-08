@@ -34,12 +34,10 @@ const usePomydoro = (): [number, boolean, boolean, PomodoroControllers] => {
   useEffect(() => {
     if (!isFinished) return;
     toggleBreak();
-    console.log("break toggle");
   }, [isFinished]);
 
   useEffect(() => {
     if (isBreak) {
-      console.log("break number brefore set: " + breakNumber);
       setBreakNumber(
         (oldBreakNumber) => (oldBreakNumber + 1) % (shortBreakCounter + 1)
       );
@@ -49,16 +47,13 @@ const usePomydoro = (): [number, boolean, boolean, PomodoroControllers] => {
   useEffect(() => {
     if (isBreak) {
       if (breakNumber === shortBreakCounter) {
-        console.log("long break started!");
         setStartCount(longBreak);
         resetTimer();
       } else {
-        console.log("short break started!");
         setStartCount(shortBreak);
         resetTimer();
       }
     } else {
-      console.log("break ended!");
       setStartCount(pomydoro);
       resetTimer();
     }
