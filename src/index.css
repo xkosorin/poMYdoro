@@ -10,6 +10,14 @@
   .btn-secondary {
     @apply bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 border-b-4 active:border-b-0 border-orange-700 hover:border-orange-500 rounded;
   }
+
+  .btn-save {
+    @apply bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 active:border-b-0 border-green-700 hover:border-green-500 rounded;
+  }
+
+  .btn-disc {
+    @apply bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 active:border-b-0 border-red-700 hover:border-red-500 rounded;
+  }
 }
 
 @layer utilities {
@@ -22,8 +30,7 @@
     left: 0;
     background: rgba(0, 0, 0, 0.7);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    @apply justify-center items-start;
   }
 
   .modal-box {
@@ -32,5 +39,6 @@
     background: white;
     padding: 1rem;
     border-radius: 0.5rem;
+    @apply mt-8;
   }
 }
