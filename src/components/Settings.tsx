@@ -1,18 +1,26 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 
-const Settings = (
-  pomydoro: number,
-  shortBreak: number,
-  longBreak: number,
-  shortBreakCounter: number,
-  toggleModal: () => void
-) => {
-  const pomodoroRef = useRef(null);
-  const shortBreakRef = useRef(null);
-  const longBreakRef = useRef(null);
-  const shortBreakCounterRef = useRef(null);
+interface Props {
+  pomydoro: number;
+  shortBreak: number;
+  longBreak: number;
+  shortBreakCounter: number;
+  toggleModal: () => void;
+  handleSaveButton: (
+    pomydoro: string,
+    shortBreak: string,
+    longBreak: string,
+    shortBreakCounter: string
+  ) => void;
+}
 
-  function handleSaveButton() {}
+const Settings = (props: Props) => {
+  const pomodoroRef = useRef<HTMLInputElement | null>(null);
+  const shortBreakRef = useRef<HTMLInputElement | null>(null);
+  const longBreakRef = useRef<HTMLInputElement | null>(null);
+  const shortBreakCounterRef = useRef<HTMLInputElement | null>(null);
+
+  const handle = () => {};
 
   return (
     <>
@@ -21,33 +29,36 @@ const Settings = (
       </h4>
       <div className="grid grid-cols-1 gap-4">
         <label className="block">
-          <span className="text-gray-700 text-sm">Pomodoro</span>
+          <span className="text-gray-700 text-sm">Pomodoro (sec.)</span>
           <input
             id="pomodoro"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
-            value={pomydoro}
+            defaultValue={props.pomydoro / 1000}
             ref={pomodoroRef}
+            min={1}
           />
         </label>
         <label className="block">
-          <span className="text-gray-700 text-sm">Short break</span>
+          <span className="text-gray-700 text-sm">Short break (sec.)</span>
           <input
             id="pomodoro"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
-            value={shortBreak}
+            defaultValue={props.shortBreak / 1000}
             ref={shortBreakRef}
+            min={1}
           />
         </label>
         <label className="block">
-          <span className="text-gray-700 text-sm">Long break</span>
+          <span className="text-gray-700 text-sm">Long break (sec.)</span>
           <input
             id="pomodoro"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
-            value={longBreak}
+            defaultValue={props.longBreak / 1000}
             ref={longBreakRef}
+            min={1}
           />
         </label>
         <label className="block">
@@ -56,14 +67,26 @@ const Settings = (
             id="pomodoro"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
-            value={shortBreakCounter}
+            defaultValue={props.shortBreakCounter}
             ref={shortBreakCounterRef}
+            min={1}
           />
         </label>
-        <button className="btn-save" onClick={handleSaveButton}>
+        <button
+          className="btn-save"
+          onClick={(_) => {
+            props.handleSaveButton(
+              pomodoroRef.current?.value ?? "1",
+              shortBreakRef.current?.value ?? "1",
+              longBreakRef.current?.value ?? "1",
+              shortBreakCounterRef.current?.value ?? "1"
+            );
+            props.toggleModal();
+          }}
+        >
           Save
         </button>
-        <button className="btn-disc" onClick={toggleModal}>
+        <button className="btn-disc" onClick={props.toggleModal}>
           Discard
         </button>
       </div>
