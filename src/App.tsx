@@ -5,18 +5,31 @@ import usePomydoro from "./hooks/usePomydoro";
 import { useBoolean } from "usehooks-ts";
 import Modal from "./components/Modal";
 import Settings from "./components/Settings";
+import { useEffect, useState } from "react";
 
 function App() {
   const [
     counter,
     isRunning,
     isFinished,
+    autostartPomydoro,
+    autostartBreak,
     status,
     pomydoro,
     shortBreak,
     longBreak,
     shortBreakCounter,
-    { startTimer, resetTimer, stopTimer },
+    {
+      startTimer,
+      resetTimer,
+      stopTimer,
+      setPomydoro,
+      setShortBreak,
+      setLongBreak,
+      setShortBreakCounter,
+      setAutostartPomydoro,
+      setAutostartBreak,
+    },
   ] = usePomydoro();
   const { value: isModalShown, toggle: toggleModal } = useBoolean(false);
 
@@ -28,17 +41,21 @@ function App() {
   let sec = res % 60;
   let min = (res - sec) / 60;
 
-  function handleSaveButton(
+  const handleSaveButton = (
     pomydoro: string,
     shortBreak: string,
     longBreak: string,
-    shortBreakCounter: string
-  ) {
-    console.log(pomydoro);
-    console.log(shortBreak);
-    console.log(longBreak);
-    console.log(shortBreakCounter);
-  }
+    shortBreakCounter: string,
+    autostartPomydoro: boolean,
+    autostartBreak: boolean
+  ) => {
+    setPomydoro(parseInt(pomydoro) * 1000);
+    setShortBreak(parseInt(shortBreak) * 1000);
+    setLongBreak(parseInt(longBreak) * 1000);
+    setShortBreakCounter(parseInt(shortBreakCounter));
+    setAutostartPomydoro(autostartPomydoro);
+    setAutostartBreak(autostartBreak);
+  };
 
   return (
     <>
@@ -48,6 +65,8 @@ function App() {
           shortBreak={shortBreak}
           longBreak={longBreak}
           shortBreakCounter={shortBreakCounter}
+          autostartPomydoro={autostartPomydoro}
+          autostartBreak={autostartBreak}
           toggleModal={toggleModal}
           handleSaveButton={handleSaveButton}
         />

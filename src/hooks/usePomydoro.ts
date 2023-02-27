@@ -10,10 +10,14 @@ interface PomodoroControllers {
   setShortBreak: Dispatch<SetStateAction<number>>;
   setLongBreak: Dispatch<SetStateAction<number>>;
   setShortBreakCounter: Dispatch<SetStateAction<number>>;
+  setAutostartPomydoro: Dispatch<SetStateAction<boolean>>;
+  setAutostartBreak: Dispatch<SetStateAction<boolean>>;
 }
 
 const usePomydoro = (): [
   number,
+  boolean,
+  boolean,
   boolean,
   boolean,
   string,
@@ -29,6 +33,8 @@ const usePomydoro = (): [
   const [shortBreakCounter, setShortBreakCounter] = useState(3);
   const [breakNumber, setBreakNumber] = useState(0);
   const [status, setStatus] = useState("Pomodoro");
+  const [autostartPomydoro, setAutostartPomydoro] = useState(false);
+  const [autostartBreak, setAutostartBreak] = useState(false);
   const { value: isBreak, toggle: toggleBreak } = useBoolean(false);
 
   const [
@@ -66,10 +72,22 @@ const usePomydoro = (): [
         setStatus("Short break");
         resetTimer();
       }
+
+      if (autostartBreak) {
+        setTimeout(function () {
+          startTimer();
+        }, 1000);
+      }
     } else {
       setStartCount(pomydoro);
       setStatus("Pomodoro");
       resetTimer();
+
+      if (autostartPomydoro) {
+        setTimeout(function () {
+          startTimer();
+        }, 1000);
+      }
     }
   }, [isBreak]);
 
@@ -77,6 +95,8 @@ const usePomydoro = (): [
     counter,
     isRunning,
     isFinished,
+    autostartPomydoro,
+    autostartBreak,
     status,
     pomydoro,
     shortBreak,
@@ -90,6 +110,8 @@ const usePomydoro = (): [
       setShortBreak,
       setLongBreak,
       setShortBreakCounter,
+      setAutostartPomydoro,
+      setAutostartBreak,
     },
   ];
 };

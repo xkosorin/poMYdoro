@@ -1,16 +1,20 @@
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 
 interface Props {
   pomydoro: number;
   shortBreak: number;
   longBreak: number;
   shortBreakCounter: number;
+  autostartPomydoro: boolean;
+  autostartBreak: boolean;
   toggleModal: () => void;
   handleSaveButton: (
     pomydoro: string,
     shortBreak: string,
     longBreak: string,
-    shortBreakCounter: string
+    shortBreakCounter: string,
+    autostartPomydoro: boolean,
+    autostartBreak: boolean
   ) => void;
 }
 
@@ -19,8 +23,8 @@ const Settings = (props: Props) => {
   const shortBreakRef = useRef<HTMLInputElement | null>(null);
   const longBreakRef = useRef<HTMLInputElement | null>(null);
   const shortBreakCounterRef = useRef<HTMLInputElement | null>(null);
-
-  const handle = () => {};
+  const autostartPomydoroRef = useRef<HTMLInputElement | null>(null);
+  const autostartBreakRef = useRef<HTMLInputElement | null>(null);
 
   return (
     <>
@@ -42,7 +46,7 @@ const Settings = (props: Props) => {
         <label className="block">
           <span className="text-gray-700 text-sm">Short break (sec.)</span>
           <input
-            id="pomodoro"
+            id="shortBreak"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
             defaultValue={props.shortBreak / 1000}
@@ -53,7 +57,7 @@ const Settings = (props: Props) => {
         <label className="block">
           <span className="text-gray-700 text-sm">Long break (sec.)</span>
           <input
-            id="pomodoro"
+            id="longBreak"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
             defaultValue={props.longBreak / 1000}
@@ -64,12 +68,36 @@ const Settings = (props: Props) => {
         <label className="block">
           <span className="text-gray-700 text-sm">Long break interval</span>
           <input
-            id="pomodoro"
+            id="shortBreakCount"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
             defaultValue={props.shortBreakCounter}
             ref={shortBreakCounterRef}
             min={1}
+          />
+        </label>
+        <label className="grid grid-cols-2">
+          <span className="text-gray-700 text-sm justify-self-start">
+            Autostart PoMYdoro
+          </span>
+          <input
+            id="autostartPomydoro"
+            type="checkbox"
+            className="rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0 justify-self-end"
+            defaultChecked={props.autostartPomydoro}
+            ref={autostartPomydoroRef}
+          />
+        </label>
+        <label className="grid grid-cols-2">
+          <span className="text-gray-700 text-sm justify-self-start">
+            Autostart Break
+          </span>
+          <input
+            id="autostartBreak"
+            type="checkbox"
+            className="rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0 justify-self-end"
+            defaultChecked={props.autostartBreak}
+            ref={autostartBreakRef}
           />
         </label>
         <button
@@ -79,7 +107,9 @@ const Settings = (props: Props) => {
               pomodoroRef.current?.value ?? "1",
               shortBreakRef.current?.value ?? "1",
               longBreakRef.current?.value ?? "1",
-              shortBreakCounterRef.current?.value ?? "1"
+              shortBreakCounterRef.current?.value ?? "1",
+              autostartPomydoroRef.current?.checked ?? false,
+              autostartBreakRef.current?.checked ?? false
             );
             props.toggleModal();
           }}
