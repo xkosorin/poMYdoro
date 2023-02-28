@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useBoolean, useEffectOnce } from "usehooks-ts";
+import { retrieveFromLocalStorage, stringToBool } from "../utils/helpers";
 import useTimer from "./useTimer";
 
 interface PomodoroControllers {
@@ -27,14 +28,26 @@ const usePomydoro = (): [
   number,
   PomodoroControllers
 ] => {
-  const [pomydoro, setPomydoro] = useState(15000);
-  const [shortBreak, setShortBreak] = useState(5000);
-  const [longBreak, setLongBreak] = useState(10000);
-  const [shortBreakCounter, setShortBreakCounter] = useState(3);
+  const [pomydoro, setPomydoro] = useState(
+    () => parseInt(retrieveFromLocalStorage("pomydoro")) || 15000
+  );
+  const [shortBreak, setShortBreak] = useState(
+    () => parseInt(retrieveFromLocalStorage("shortBreak")) || 5000
+  );
+  const [longBreak, setLongBreak] = useState(
+    () => parseInt(retrieveFromLocalStorage("longBreak")) || 10000
+  );
+  const [shortBreakCounter, setShortBreakCounter] = useState(
+    () => parseInt(retrieveFromLocalStorage("shortBreakCounter")) || 3
+  );
   const [breakNumber, setBreakNumber] = useState(0);
   const [status, setStatus] = useState("Pomodoro");
-  const [autostartPomydoro, setAutostartPomydoro] = useState(false);
-  const [autostartBreak, setAutostartBreak] = useState(false);
+  const [autostartPomydoro, setAutostartPomydoro] = useState(
+    () => stringToBool(retrieveFromLocalStorage("autostartPomydoro")) || false
+  );
+  const [autostartBreak, setAutostartBreak] = useState(
+    () => stringToBool(retrieveFromLocalStorage("autostartBreak")) || false
+  );
   const { value: isBreak, toggle: toggleBreak } = useBoolean(false);
 
   const [
@@ -47,6 +60,22 @@ const usePomydoro = (): [
   useEffectOnce(() => {
     setStartCount(pomydoro);
   });
+
+  useEffect(() => {
+    localStorage.setItem("pomydoro", String(pomydoro));
+    localStorage.setItem("shortBreak", String(shortBreak));
+    localStorage.setItem("longBreak", String(longBreak));
+    localStorage.setItem("shortBreakCounter", String(shortBreakCounter));
+    localStorage.setItem("autostartPomydoro", String(autostartPomydoro));
+    localStorage.setItem("autostartBreak", String(autostartBreak));
+  }, [
+    pomydoro,
+    shortBreak,
+    longBreak,
+    shortBreakCounter,
+    autostartPomydoro,
+    autostartBreak,
+  ]);
 
   useEffect(() => {
     if (!isFinished) return;

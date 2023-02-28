@@ -2,10 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
 import usePomydoro from "./hooks/usePomydoro";
-import { useBoolean } from "usehooks-ts";
+import { useBoolean, useEffectOnce } from "usehooks-ts";
 import Modal from "./components/Modal";
 import Settings from "./components/Settings";
-import { useEffect, useState } from "react";
 
 function App() {
   const [
@@ -57,16 +56,22 @@ function App() {
     setAutostartBreak(autostartBreak);
   };
 
+  /*   useEffectOnce(() => {
+
+  }); */
+
   return (
     <>
       <Modal isShown={isModalShown} toggleModal={toggleModal}>
         <Settings
-          pomydoro={pomydoro}
-          shortBreak={shortBreak}
-          longBreak={longBreak}
-          shortBreakCounter={shortBreakCounter}
-          autostartPomydoro={autostartPomydoro}
-          autostartBreak={autostartBreak}
+          settings={{
+            pomydoro,
+            shortBreak,
+            longBreak,
+            shortBreakCounter,
+            autostartPomydoro,
+            autostartBreak,
+          }}
           toggleModal={toggleModal}
           handleSaveButton={handleSaveButton}
         />

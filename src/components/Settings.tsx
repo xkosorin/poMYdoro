@@ -1,12 +1,16 @@
 import { useRef } from "react";
 
-interface Props {
+interface Settings {
   pomydoro: number;
   shortBreak: number;
   longBreak: number;
   shortBreakCounter: number;
   autostartPomydoro: boolean;
   autostartBreak: boolean;
+}
+
+interface Props {
+  settings: Settings;
   toggleModal: () => void;
   handleSaveButton: (
     pomydoro: string,
@@ -38,7 +42,7 @@ const Settings = (props: Props) => {
             id="pomodoro"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
-            defaultValue={props.pomydoro / 1000}
+            defaultValue={props.settings.pomydoro / 1000}
             ref={pomodoroRef}
             min={1}
           />
@@ -49,7 +53,7 @@ const Settings = (props: Props) => {
             id="shortBreak"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
-            defaultValue={props.shortBreak / 1000}
+            defaultValue={props.settings.shortBreak / 1000}
             ref={shortBreakRef}
             min={1}
           />
@@ -60,7 +64,7 @@ const Settings = (props: Props) => {
             id="longBreak"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
-            defaultValue={props.longBreak / 1000}
+            defaultValue={props.settings.longBreak / 1000}
             ref={longBreakRef}
             min={1}
           />
@@ -71,7 +75,7 @@ const Settings = (props: Props) => {
             id="shortBreakCount"
             type="number"
             className="form-input w-full block rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0"
-            defaultValue={props.shortBreakCounter}
+            defaultValue={props.settings.shortBreakCounter}
             ref={shortBreakCounterRef}
             min={1}
           />
@@ -84,7 +88,7 @@ const Settings = (props: Props) => {
             id="autostartPomydoro"
             type="checkbox"
             className="rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0 justify-self-end"
-            defaultChecked={props.autostartPomydoro}
+            defaultChecked={props.settings.autostartPomydoro}
             ref={autostartPomydoroRef}
           />
         </label>
@@ -96,7 +100,7 @@ const Settings = (props: Props) => {
             id="autostartBreak"
             type="checkbox"
             className="rounded-md bg-gray-100 text-center focus:border-gray-500 focus:bg-white focus:ring-0 justify-self-end"
-            defaultChecked={props.autostartBreak}
+            defaultChecked={props.settings.autostartBreak}
             ref={autostartBreakRef}
           />
         </label>
