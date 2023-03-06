@@ -11,10 +11,11 @@ interface TimerControllers {
 type TimeInterval = "ms" | "sec";
 
 const useTimer = (
-  timeInterval: TimeInterval
+  timeInterval: TimeInterval,
+  timeAmount?: number
 ): [number, boolean, boolean, TimerControllers] => {
-  const [startCount, setStartCount] = useState(0);
-  const [count, setCount] = useState(0);
+  const [startCount, setStartCount] = useState(timeAmount || 0);
+  const [count, setCount] = useState(timeAmount || 0);
   const [isRunning, setIsRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [interval, setInterval] = useState(1000);
