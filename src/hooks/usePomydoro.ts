@@ -78,8 +78,9 @@ const usePomydoro = (): [
   ]);
 
   useEffect(() => {
-    if (!isFinished) return;
-    toggleBreak();
+    if (isFinished) {
+      toggleBreak();
+    }
   }, [isFinished]);
 
   useEffect(() => {
