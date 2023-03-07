@@ -7,16 +7,19 @@ My main goal with this project was to try making custom hooks and tests.
 ## Demo
 
 ## Screenshots
+
 ### Desktop version
+
 <p align="center">
-   <img src="./images/screen00.png" alt="Desktop version" width="450px">
-   <img src="./images/screen01.png" alt="Desktop version settings" width="450px">
+   <img src="./images/screen00.png" alt="Desktop version" width="400px">
+   <img src="./images/screen01.png" alt="Desktop version settings" width="400px">
 </p>
 
 ### Mobile version
+
 <p align="center">
-   <img src="./images/screen10.png" alt="Mobile version" height="600px">
-   <img src="./images/screen11.png" alt="Mobile version settings" height="600px">
+   <img src="./images/screen10.png" alt="Mobile version" height="450px">
+   <img src="./images/screen11.png" alt="Mobile version settings" height="450px">
 </p>
 
 ## Technologies Used
