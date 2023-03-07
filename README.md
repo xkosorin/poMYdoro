@@ -2,9 +2,10 @@
 
 Personal project to implement Pomodoro timer in React with Typescript.
 
-My main goal with this project was to try making custom hooks and tests.
+My main goal with this project was to try making custom hooks, localStorage and tests. 
 
 ## Demo
+[Github Pages Demo](https://xkosorin.github.io/poMYdoro/)
 
 ## Screenshots
 
