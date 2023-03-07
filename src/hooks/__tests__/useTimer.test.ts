@@ -14,7 +14,7 @@ describe("Tests of useTimer custom hook", () => {
     expect(isFinished).toBe(false);
   });
 
-  it("should be correctly initialized witho time.", () => {
+  it("should be correctly initialized with time.", () => {
     const { result } = renderHook(() => useTimer(TIME_INTERVAL, TIME_AMOUNT));
     const [count, isRunning, isFinished] = result.current;
 
