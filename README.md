@@ -7,13 +7,17 @@ My main goal with this project was to try making custom hooks and tests.
 ## Demo
 
 ## Screenshots
-Desktop version             |  Settings
-:-------------------------:|:-------------------------:
-![Desktop version](./images/screen00.png "Desktop version") | ![Desktop version settings](./images/screen01.png "Desktop version settings")
+### Desktop version
+<p align="center">
+   <img src="./images/screen00.png" alt="Desktop version" width="450px">
+   <img src="./images/screen01.png" alt="Desktop version settings" width="450px">
+</p>
 
-Mobile version             |  Settings
-:-------------------------:|:-------------------------:
-![Desktop version](./images/screen10.png "Desktop version") | ![Desktop version settings](./images/screen11.png "Desktop version settings")
+### Mobile version
+<p align="center">
+   <img src="./images/screen10.png" alt="Mobile version" height="600px">
+   <img src="./images/screen11.png" alt="Mobile version settings" height="600px">
+</p>
 
 ## Technologies Used
 
